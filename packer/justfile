@@ -1,0 +1,10 @@
+init:
+    packer init noble/noble.pkr.hcl
+
+base: init
+    packer build noble/noble.pkr.hcl
+
+syncthing: 
+    packer build syncthing/syncthing.pkr.hcl
+
+
