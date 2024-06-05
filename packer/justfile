@@ -8,3 +8,12 @@ syncthing:
     packer build syncthing/syncthing.pkr.hcl
 
 
+grafana: 
+    packer build grafana/grafana.pkr.hcl
+
+prometheus: 
+    packer build prometheus/prometheus.pkr.hcl
+
+
+
+
