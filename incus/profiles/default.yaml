@@ -1,0 +1,19 @@
+config: {}
+description: Default Incus profile
+devices:
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: br0
+    type: nic
+  root:
+    path: /
+    pool: default
+    type: disk
+name: default
+used_by:
+- /1.0/instances/myst
+- /1.0/instances/mysyncthing?project=services
+- /1.0/instances/grafana?project=services
+- /1.0/instances/prometheus?project=services
+project: default

@@ -1,5 +1,4 @@
 
-
 resource "incus_instance" "prometheus" {
 
   project  = var.project_name
@@ -23,5 +22,8 @@ resource "incus_instance_file" "file1" {
   project  = var.project_name
   source_path        = "prometheus/prometheus.yml"
   target_path        = "/opt/prometheus/prometheus.yml"
+  uid                = 1001
+  gid                = 1001
+  mode              = "0644"
   create_directories = true
 }

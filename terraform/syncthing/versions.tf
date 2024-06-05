@@ -5,5 +5,8 @@ terraform {
       source  = "lxc/incus"
       version = ">=0.1.1"
     }
+    packer = {
+      source  = "toowoxx/packer"
+    }
   }
 }

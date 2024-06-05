@@ -12,6 +12,28 @@ resource "incus_project" "this" {
   }
 }
 
+data "packer_version" "version" {}
+data "packer_files" "syncthing" {
+  file = "syncthing/syncthing.pkr.hcl"
+}
+
+
+resource "packer_image" "syncthing" {
+  file = data.packer_files.syncthing.file
+  variables = {
+    image      = var.image
+  }
+  triggers = {
+    packer_version = data.packer_version.version.version
+    files_hash     = data.packer_files.syncthing.files_hash
+  }
+}
+
+
+resource "terraform_data" "replacement" {
+  input = packer_image.syncthing.build_uuid
+}
+
 resource "incus_instance" "mysyncthing" {
 
   project  = incus_project.this.name
@@ -34,6 +56,6 @@ resource "incus_instance" "mysyncthing" {
   }
 
   lifecycle {
-    ignore_changes = [ running ]
+    replace_triggered_by = [ terraform_data.replacement.output ]
   }
 }

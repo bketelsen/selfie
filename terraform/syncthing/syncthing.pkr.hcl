@@ -7,9 +7,13 @@ packer {
   }
 }
 
+variable "image" {
+  type = string
+}
+
 source "incus" "syncthing" {
   image        = "selfie-noble"
-  output_image = "selfie-syncthing"
+  output_image = var.image
   reuse        = true
 }
 
@@ -19,7 +23,7 @@ build {
     scripts = [
       "common/install-go.sh",
       "syncthing/build.sh",
-
+      
     ]
   }
 

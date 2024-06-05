@@ -4,9 +4,14 @@ init:
 base: init
     packer build noble/noble.pkr.hcl
 
+services: base
+    packer build syncthing/syncthing.pkr.hcl
+    packer build grafana/grafana.pkr.hcl
+    packer build prometheus/prometheus.pkr.hcl
+
+
 syncthing: 
     packer build syncthing/syncthing.pkr.hcl
-
 
 grafana: 
     packer build grafana/grafana.pkr.hcl
