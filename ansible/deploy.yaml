@@ -1,0 +1,3 @@
+
+- import_playbook: books/ubuntu.yaml
+- import_playbook: books/prom.yaml

@@ -11,6 +11,7 @@ source "incus" "noble" {
   image        = "images:ubuntu/noble"
   output_image = "selfie-noble"
   reuse        = true
+  publish_remote_name = "selfie"
 }
 
 build {
@@ -24,6 +25,7 @@ build {
     scripts = [
       "common/packages.sh",
       "common/sudoers.sh",
+      "common/import-id.sh",
     ]
   }
 

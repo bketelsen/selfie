@@ -2,3 +2,13 @@
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
+**/*.enc
+**/*.vault
+
+# hugo
+
+*.test
+imports.*
+dist/
+/docs/public/
+.DS_Store

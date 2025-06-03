@@ -5,7 +5,7 @@ resource "incus_instance" "prometheus" {
   name     = "prometheus"
   type     = "container"
   image    = var.image
-  profiles = ["default"]
+  profiles = ["default", "br0"]
   config = {
     "security.nesting" = true
     "raw.idmap" = "both 1000 1000"
@@ -15,15 +15,16 @@ resource "incus_instance" "prometheus" {
     ignore_changes = [ running ]
   }
 }
+resource "ansible_host" "prometheus" {          #### ansible host details
+  name   = incus_instance.prometheus.name
+  groups = ["incus_instances", "ubuntu"]
+  variables = {
+    ansible_user                 = "ubuntu",
+    ansible_ssh_private_key_file = "~/.ssh/id_rsa",
+    ansible_host                 = incus_instance.prometheus.ipv4_address,
+  }
+}
 
-
-resource "incus_instance_file" "file1" {
-  instance           = incus_instance.prometheus.name
-  project  = var.project_name
-  source_path        = "prometheus/prometheus.yml"
-  target_path        = "/opt/prometheus/prometheus.yml"
-  uid                = 1001
-  gid                = 1001
-  mode              = "0644"
-  create_directories = true
+output "instance_ip_addr" {
+  value = incus_instance.prometheus.ipv4_address
 }

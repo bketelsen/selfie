@@ -1,27 +1,10 @@
-resource "incus_storage_pool" "default" {
-  name    = "default"
-  driver  = "btrfs"
-}
 
-import {
-  to = incus_storage_pool.default
-  id = "default"
-}
-
-module "grafana" {
-  source = "./grafana"
-  project_name   = "services"
-  image           = "selfie-grafana"
-}
 module "prometheus" {
   source = "./prometheus"
-  project_name   = "services"
-  image           = "selfie-prometheus"
+  project_name   = "default"
+  image           = "selfie-noble"
 }
 
-
-module "syncthing" {
-  source = "./syncthing"
-  project_name   = "services"
-  image           = "selfie-syncthing"
+output "prometheus_ipv4_address" {
+  value = module.prometheus.instance_ip_addr
 }

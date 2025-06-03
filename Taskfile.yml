@@ -1,0 +1,78 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+    silent: true
+
+  ansible:
+    desc: Run Ansible playbook
+    cmds:
+      - echo "Running Ansible Deploy"
+      - ansible-playbook -i inventory.yml deploy.yaml
+    silent: false
+    dir: ansible
+
+  inventory:
+    desc: Display Ansible inventory
+    cmds:
+      - echo "Generating Ansible inventory"
+      - ansible-inventory --graph --vars
+    silent: true
+    dir: ansible
+
+  packer-init:
+    desc: Initialize Packer configuration
+    cmds:
+      - echo "Running Packer Init"
+      - packer init noble/noble.pkr.hcl
+    silent: true
+    dir: packer
+
+  packer:
+    desc: Build the Packer image
+    deps:
+      - packer-init
+    cmds:
+      - echo "Running Packer Build"
+      - packer build noble/noble.pkr.hcl
+    silent: false
+    dir: packer
+
+  tofu-init:
+    desc: Run Tofu with Terraform provider
+    cmds:
+      - echo "Running Tofu with Terraform provider"
+      - tofu init -upgrade
+    silent: false
+    dir: terraform
+
+  tofu-refresh:
+    desc: Refresh Terraform state with Tofu
+    cmds:
+      - echo "Running Tofu refresh"
+      - tofu refresh
+    silent: false
+    dir: terraform
+
+  tofu-plan:
+    desc: Plan Terraform changes with Tofu
+    cmds:
+      - echo "Running Tofu plan"
+      - tofu plan
+    silent: false
+    dir: terraform
+
+  tofu-apply:
+    desc: Apply Terraform changes with Tofu
+    cmds:
+      - echo "Running Tofu apply"
+      - tofu apply -auto-approve
+    silent: false
+    dir: terraform
