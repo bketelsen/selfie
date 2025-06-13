@@ -1,0 +1,38 @@
+- name: Apply all updates
+  hosts: all
+  gather_facts: yes
+  gather_subset:
+    - "distribution_release"
+  order: shuffle
+  any_errors_fatal: true
+  tasks:
+    - name: Check if distribution is supported
+      meta: end_play
+      when: 'ansible_distribution not in ("Ubuntu", "Debian")'
+
+    - name: Update apt repo and cache on all Debian/Ubuntu boxes
+      become: true
+      apt:
+        force_apt_get: yes
+        update_cache: yes
+        cache_valid_time: 1800
+
+    - name: Upgrade all packages on servers
+      become: true
+      apt:
+        force_apt_get: yes
+        upgrade: dist
+        purge: yes
+
+    - name: Clean unused packages
+      become: true
+      apt:
+        force_apt_get: yes
+        autoremove: yes
+        purge: yes
+
+    - name: Clean leftover packages
+      become: true
+      apt:
+        force_apt_get: yes
+        autoclean: yes

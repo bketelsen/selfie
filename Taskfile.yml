@@ -12,18 +12,24 @@ tasks:
     silent: true
 
   ansible:
-    desc: Run Ansible playbook
+    desc: Run Ansible playbook on physical hosts
+    cmds:
+      - echo "Running Ansible Deploy"
+      - ansible-playbook -i hosts.ini deploy.yaml --ask-become-pass
+    silent: false
+    dir: ansible
+  ansible-incus:
+    desc: Run Ansible playbook on incus instances
     cmds:
       - echo "Running Ansible Deploy"
       - ansible-playbook -i inventory.yml deploy.yaml
     silent: false
     dir: ansible
-
   inventory:
-    desc: Display Ansible inventory
+    desc: Display Dynamic Ansible inventory
     cmds:
       - echo "Generating Ansible inventory"
-      - ansible-inventory --graph --vars
+      - ansible-inventory --graph --vars -i inventory.yml
     silent: true
     dir: ansible
 

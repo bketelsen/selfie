@@ -20,6 +20,7 @@ resource "ansible_host" "prometheus" {          #### ansible host details
   groups = ["incus_instances", "ubuntu"]
   variables = {
     ansible_user                 = "ubuntu",
+    ansible_become              = true,
     ansible_ssh_private_key_file = "~/.ssh/id_rsa",
     ansible_host                 = incus_instance.prometheus.ipv4_address,
   }

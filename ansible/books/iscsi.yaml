@@ -1,0 +1,11 @@
+- name: iscsi
+  hosts: selfie
+  gather_facts: yes
+  order: shuffle
+  any_errors_fatal: true
+  tasks:
+    - name: install open-iscsi
+      ansible.builtin.apt:
+        name:
+          - open-iscsi
+        state: present

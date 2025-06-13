@@ -1,0 +1,28 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp1s0:
+      dhcp4: no
+      dhcp6: no
+    enp7s0:
+      dhcp4: no
+      dhcp6: no
+  bridges:
+    br0:
+      interfaces:
+        - enp1s0
+      dhcp4: yes
+      dhcp6: no
+      accept-ra: yes
+      dhcp4-overrides:
+        route-metric: 100
+
+    br5:
+      interfaces:
+        - enp7s0
+      dhcp4: yes
+      dhcp6: no
+      accept-ra: yes
+      dhcp4-overrides:
+        route-metric: 200

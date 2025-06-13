@@ -1,0 +1,11 @@
+- name: adding existing user to groups
+  hosts: selfie
+  gather_facts: yes
+  order: shuffle
+  any_errors_fatal: true
+  tasks:
+    - name: Add user to groups
+      ansible.builtin.user:
+        name: bjk
+        groups: sudo,incus-admin
+        append: yes
