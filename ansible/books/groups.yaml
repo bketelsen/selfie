@@ -7,5 +7,5 @@
     - name: Add user to groups
       ansible.builtin.user:
         name: bjk
-        groups: sudo,incus-admin
+        groups: sudo,incus-admin,docker
         append: yes

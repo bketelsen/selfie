@@ -5,18 +5,21 @@ network:
     enp1s0:
       dhcp4: no
       dhcp6: no
+      mtu: 1500
     enp7s0:
       dhcp4: no
       dhcp6: no
+      mtu: 1500
   bridges:
     br0:
       interfaces:
         - enp1s0
       dhcp4: yes
       dhcp6: no
+      mtu: 1500
       accept-ra: yes
       dhcp4-overrides:
-        route-metric: 100
+        route-metric: 200
 
     br5:
       interfaces:
@@ -24,5 +27,6 @@ network:
       dhcp4: yes
       dhcp6: no
       accept-ra: yes
+      mtu: 1500
       dhcp4-overrides:
-        route-metric: 200
+        route-metric: 100
